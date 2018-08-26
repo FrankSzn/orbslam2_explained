@@ -73,7 +73,7 @@ namespace ORB_SLAM2
 
 const int PATCH_SIZE = 31;
 const int HALF_PATCH_SIZE = 15;
-const int EDGE_THRESHOLD = 19;
+const int EDGE_THRESHOLD = 19; // why choose 19 @frankszn
 
 
 static float IC_Angle(const Mat& image, Point2f pt,  const vector<int> & u_max)
@@ -87,7 +87,7 @@ static float IC_Angle(const Mat& image, Point2f pt,  const vector<int> & u_max)
         m_10 += u * center[u];
 
     // Go line by line in the circuI853lar patch
-    int step = (int)image.step1();
+    int step = (int)image.step1();// the number of channels in the line @frankszn
     for (int v = 1; v <= HALF_PATCH_SIZE; ++v)
     {
         // Proceed over the two lines
@@ -111,7 +111,7 @@ static void computeOrbDescriptor(const KeyPoint& kpt,
                                  const Mat& img, const Point* pattern,
                                  uchar* desc)
 {
-    float angle = (float)kpt.angle*factorPI;
+    float angle = (float)kpt.angle*factorPI;//kpt.angle computed orientation of the keypoint (-1 if not applicable). Its possible values are in a range [0,360) degrees. It is measured relative to image coordinate system (y-axis is directed downward), ie in clockwise @frankszn
     float a = (float)cos(angle), b = (float)sin(angle);
 
     const uchar* center = &img.at<uchar>(cvRound(kpt.pt.y), cvRound(kpt.pt.x));
